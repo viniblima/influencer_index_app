@@ -1,6 +1,10 @@
 # influencer_index_app
 
-A new Flutter project.
+Project about InfluencerIndex's test.
+
+## About
+
+- The project is using Mobx to control the state of the app
 
 ## Getting Started
 
