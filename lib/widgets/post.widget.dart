@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:influencer_index_app/models/post.model.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 
 class PostWidget extends StatelessWidget {
   final Post? post;
@@ -38,45 +39,101 @@ class PostWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-              constraints: BoxConstraints(
-                maxHeight: 273,
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Hero(
-                  tag: 'image_post',
-                  child: Image(
-                    fit: BoxFit.cover,
-                    image: AssetImage('assets/images/mountains.jpg'),
+            isLoading
+                ? Container(
+                    height: 200,
+                    child: Shimmer(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Color(0xFFCCCCCC),
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(
+                    height: 200,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Hero(
+                        tag: 'image_post',
+                        child: Image(
+                          fit: BoxFit.cover,
+                          image: AssetImage('assets/images/mountains.jpg'),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
             const SizedBox(height: 16.0),
-            Text(
-              post?.title ?? '',
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
-                fontFamily: 'Roboto Condensed',
-              ),
-              textAlign: TextAlign.left,
-              maxLines: 2,
-            ),
+            isLoading
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 20,
+                        child: Shimmer(
+                          child: Container(
+                            color: Color(0xFFCCCCCC),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Container(
+                        height: 20,
+                        child: Shimmer(
+                          child: Container(
+                            color: Color(0xFFCCCCCC),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : Text(
+                    post?.title ?? '',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Roboto Condensed',
+                    ),
+                    textAlign: TextAlign.left,
+                    maxLines: 2,
+                  ),
             const SizedBox(height: 10.0),
-            Text(
-              post?.body ?? '',
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                fontFamily: 'Lato',
-                color: Color(0xFF6D6D6D),
-              ),
-              textAlign: TextAlign.left,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
+            isLoading
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 14,
+                        child: Shimmer(
+                          child: Container(
+                            color: Color(0xFFCCCCCC),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Container(
+                        height: 14,
+                        child: Shimmer(
+                          child: Container(
+                            color: Color(0xFFCCCCCC),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : Text(
+                    post?.body ?? '',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Lato',
+                      color: Color(0xFF6D6D6D),
+                    ),
+                    textAlign: TextAlign.left,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
             const SizedBox(height: 20.0),
             Container(
               decoration: BoxDecoration(
