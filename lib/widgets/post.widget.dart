@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:influencer_index_app/models/post.model.dart';
+import 'package:influencer_index_app/pages/intern.page.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
 class PostWidget extends StatelessWidget {
   final Post? post;
   final bool isLoading;
+  final int? indexHero;
 
   const PostWidget({
     Key? key,
     this.post,
+    this.indexHero,
     required this.isLoading,
   }) : super(key: key);
 
@@ -19,6 +22,15 @@ class PostWidget extends StatelessWidget {
         if (isLoading) {
           return;
         }
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => InternScreen(
+              post: post,
+              indexHero: indexHero,
+            ),
+          ),
+        );
       },
       child: Container(
         decoration: BoxDecoration(
@@ -56,7 +68,7 @@ class PostWidget extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
                       child: Hero(
-                        tag: 'image_post',
+                        tag: 'image_post_$indexHero',
                         child: Image(
                           fit: BoxFit.cover,
                           image: AssetImage('assets/images/mountains.jpg'),
@@ -135,24 +147,37 @@ class PostWidget extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
             const SizedBox(height: 20.0),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(4.0),
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 6,
-                vertical: 2,
-              ),
-              child: Text(
-                '#000${post?.id}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontFamily: 'Nunito',
-                ),
-              ),
-            ),
+            isLoading
+                ? Container(
+                    width: 50,
+                    height: 20,
+                    child: Shimmer(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4.0),
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 2,
+                    ),
+                    child: Text(
+                      '#000${post?.id}',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontFamily: 'Nunito',
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),

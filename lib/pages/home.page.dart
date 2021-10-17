@@ -50,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 37,
+                  fontFamily: 'Roboto Condensed',
                 ),
               ),
               backgroundColor: Colors.transparent,
@@ -85,8 +86,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               right: 16,
                             ),
                             child: PostWidget(
-                                isLoading: _postsStore.isLoading,
-                                post: _postsStore.posts[index]),
+                              isLoading: _postsStore.isLoading,
+                              post: _postsStore.posts[index],
+                              indexHero: index,
+                            ),
                           );
                         },
                         childCount: _postsStore.posts.length,

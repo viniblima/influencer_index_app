@@ -12,9 +12,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Influence Index',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: HomeScreen(),
     );
   }
